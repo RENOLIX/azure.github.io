@@ -1,5 +1,6 @@
 from pathlib import Path
 from html import escape
+from urllib.parse import quote
 
 ROOT = Path(__file__).parent / "dist"
 MAIL = "eurlazurepharm@gmail.com"
@@ -43,7 +44,7 @@ def shell(title, description, current, body):
   <meta name="description" content="{escape(description, quote=True)}">
   <title>{escape(title)} · Azuré Pharm</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101b40'/%3E%3Cpath d='M12 49 30 13l7 15-7 9-3-7-10 19z' fill='%235d57a5'/%3E%3Cpath d='M31 43c10-15 21-22 27-17 5 5-3 17-17 23l-4-7c10-4 15-10 13-12-3-2-10 4-18 16z' fill='%232d9ddb'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="assets/site.css?v=6">
+  <link rel="stylesheet" href="assets/site.css?v=7">
   <script src="assets/site.js?v=2" defer></script>
 </head>
 <body>
@@ -121,5 +122,107 @@ pages = {
 '''),
 }
 
+def product_table(rows):
+    header = '<thead><tr><th scope="col">Spectre indiqué</th><th scope="col">Norme ou organisme mentionné</th><th scope="col">Temps de contact</th></tr></thead>'
+    body = "".join('<tr>' + "".join(f'<td>{escape(cell)}</td>' for cell in row) + '</tr>' for row in rows)
+    return f'<div class="table-scroll"><table class="technical-table">{header}<tbody>{body}</tbody></table></div>'
+
+def product_page(name, family, summary, image, image_alt, image_caption, facts, sections, source_note, related):
+    fact_html = "".join(f'<div><strong>{escape(value)}</strong><span>{escape(label)}</span></div>' for value, label in facts)
+    related_html = "".join(f'<a href="{url}"><span>{escape(kind)}</span><strong>{escape(label)}</strong><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>' for url, kind, label in related)
+    contact_url = f"contact.html?produit={quote(name)}"
+    return f'''
+<section class="detail-hero"><div class="container"><nav class="breadcrumbs" aria-label="Fil d’Ariane"><a href="index.html">Accueil</a><span>/</span><a href="produits.html">Nos produits</a><span>/</span><strong>{escape(name)}</strong></nav><div class="detail-hero-grid"><div class="detail-copy"><span class="eyebrow">{escape(family)}</span><h1>{escape(name)}</h1><p>{escape(summary)}</p><a class="button button-inset" href="{contact_url}">Demander des informations ↗</a></div><figure class="detail-packshot"><img src="{image}" alt="{escape(image_alt, quote=True)}"><figcaption>{escape(image_caption)}</figcaption></figure></div></div></section>
+<section class="detail-facts"><div class="container detail-facts-grid">{fact_html}</div></section>
+{sections}
+<section class="section detail-source"><div class="container"><div class="detail-source-panel"><span class="eyebrow">SOURCE & PRÉCAUTIONS</span><p>{source_note}</p></div></div></section>
+<section class="section detail-related"><div class="container"><div class="section-heading"><span class="eyebrow">AUTRES PRODUITS PRÉSENTÉS</span><h2>Découvrir les autres familles.</h2></div><div class="detail-related-grid">{related_html}</div></div></section>
+<section class="contact-strip"><div class="container contact-strip-inner"><div><span class="eyebrow">BESOIN D’UN DOCUMENT ?</span><h2>Parlons de votre usage.</h2></div><a class="button button-inset button-strip" href="{contact_url}">Contacter Azuré Pharm ↗</a></div></section>
+'''
+
+surfacide_rows = [
+    ("Bactéries", "EN 1040, EN 13727, EN 1276, T72-300 (BMR), EN 13697", "5 min"),
+    ("Bactéries", "NF T 72-170 / T 72-300 (L. pneumophila)", "15 min"),
+    ("Mycobactéries", "Mycobacterium tuberculosis (B.K)", "15 min"),
+    ("Mycobactéries", "EN 14348 (M. terrae)", "30 min"),
+    ("Levures / moisissures", "EN 1275 (Candida albicans), T72-300 (A. niger, A. fumigatus)", "15 min"),
+    ("Levures / moisissures", "EN 1650 (C. albicans)", "5 min"),
+    ("Virus", "HIV-1, BVDV (virus modèle HCV)", "5 min"),
+    ("Virus", "Influenza (H5N1)", "15 min"),
+    ("Virus", "PRV (virus modèle HBV)", "30 min"),
+]
+
+presterimed_rows = [
+    ("Bactéries", "EN 1040, EN 13727, NF T 72-171 / SARM (EN 13727)", "5 min"),
+    ("Bactéries", "NF T 72-190, T72-300 (A. baumannii)", "15 min"),
+    ("Mycobactéries", "Mycobacterium tuberculosis (B.K)", "15 min"),
+    ("Levures / moisissures", "EN 1275 (Candida albicans), EN 13624", "5 min"),
+    ("Virus", "HIV-1, HBV", "10 min"),
+    ("Virus", "BVDV (virus modèle HCV)", "5 min"),
+]
+
+pages.update({
+    "surfacide.html": ("Surfacide", "Surfacide, détergent désinfectant pour sols et surfaces : indications, dilution, mode d’emploi et caractéristiques d’après la fiche fournie.", product_page(
+        "Surfacide", "SOLS & SURFACES", "Détergent désinfectant destiné au nettoyage et à la désinfection des sols, murs, matériels et dispositifs médicaux, selon la fiche technique transmise.",
+        "assets/surfacide-document.jpg", "Bidon Surfacide photographié dans la fiche technique fournie", "Photo issue de la fiche fournie",
+        [("0,25 %", "Dilution indiquée"), ("20 ml", "Pour 8 L d’eau"), ("1 L / 5 L", "Conditionnements indiqués")],
+        f'''
+<section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">INDICATIONS</span><h2>Pour les sols, murs et surfaces.</h2><p>La fiche mentionne le nettoyage et la désinfection des sols, des murs, du matériel et des dispositifs médicaux.</p><img class="detail-secondary-image" src="assets/surfacide-document.jpg" alt="Étiquette du bidon Surfacide"></div><div class="detail-main"><div class="detail-block"><h3>Caractéristiques</h3><ul class="detail-list"><li>Utilisable en eau froide ou chaude, jusqu’à +60 °C.</li><li>Large compatibilité annoncée avec les matériaux et revêtements de surface.</li><li>pH du produit pur : environ 12 ; pH à la dilution d’emploi : environ 8,5.</li><li>Formule indiquée comme non corrosive en raison de l’absence d’oxydant.</li></ul></div><div class="detail-block"><h3>Composition qualitative</h3><p>N-(3-aminopropyl)-N-dodécylpropane-1,3-diamine (51 mg/g), chlorure de didécyldiméthylammonium (25 mg/g) et excipient, selon la fiche fournie.</p></div></div></div></section>
+<section class="section pale-section detail-protocol"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">MODE D’EMPLOI</span><h2>La méthode indiquée dans la fiche.</h2></div><p>Ces étapes reprennent le document transmis. Respectez toujours l’étiquette et les consignes en vigueur dans votre établissement.</p></div><ol class="protocol-grid"><li><strong>Préparer deux seaux</strong><p>Remplir un seau de lavage et un seau de rinçage avec 8 litres d’eau chacun.</p></li><li><strong>Diluer à 0,25 %</strong><p>Verser une dose de 20 ml de Surfacide dans le seau de lavage.</p></li><li><strong>Nettoyer la zone</strong><p>Après balayage humide, laver du fond de la pièce vers la sortie. La fiche précise de ne pas rincer les surfaces.</p></li><li><strong>Gérer la chiffonnette</strong><p>Rincer et essorer la chiffonnette avant de la replonger dans le seau de lavage. La fiche recommande de placer le chariot dans le couloir.</p></li></ol></div></section>
+<section class="section"><div class="container"><div class="section-heading"><span class="eyebrow">DONNÉES DE LA FICHE</span><h2>Propriétés microbiologiques indiquées.</h2><p>Les normes et temps de contact ci-dessous sont transcrits de la fiche transmise ; ils ne constituent pas une vérification indépendante.</p></div>{product_table(surfacide_rows)}</div></section>
+<section class="section pale-section"><div class="container detail-safety-grid"><div><span class="eyebrow">CONDITIONNEMENTS</span><h2>Formats mentionnés.</h2><p>Carton de 12 flacons de 1 litre ou bidon de 5 litres.</p><div class="detail-formats"><span>12 × 1 L</span><span>5 L</span></div></div><div><span class="eyebrow">PRÉCAUTIONS</span><h2>Produit dangereux.</h2><p>Respecter les précautions d’emploi indiquées sur l’étiquette. Stockage de +5 °C à +35 °C selon la fiche.</p><div class="hazard-icons"><figure><img src="assets/hazard-toxic.png" alt="Pictogramme de toxicité présent dans la fiche"><figcaption>Toxicité</figcaption></figure><figure><img src="assets/hazard-corrosive.png" alt="Pictogramme de corrosion présent dans la fiche"><figcaption>Corrosion</figcaption></figure><figure><img src="assets/hazard-environment.jpg" alt="Pictogramme de danger environnemental présent dans la fiche"><figcaption>Environnement</figcaption></figure></div></div></div></section>
+''',
+        "Informations issues de la fiche Surfacide transmise, qui porte la mention EURL Khodja Laboratoire. La photo et les pictogrammes proviennent de ce document. Vérifiez l’étiquette, la fiche de sécurité et la documentation à jour avant toute utilisation.",
+        [("surfaces-hautes.html", "SURFACES HAUTES", "Surfaces hautes"), ("presterimed.html", "INSTRUMENTS", "Presterimed")]
+    )),
+    "presterimed.html": ("Presterimed", "Presterimed, détergent pré-désinfectant de l’instrumentation : protocole, conditionnements et données de la fiche fournie.", product_page(
+        "Presterimed", "INSTRUMENTS", "Détergent pré-désinfectant de l’instrumentation chirurgicale et médicale, du matériel thermosensible et d’endoscopie, selon la fiche technique transmise.",
+        "assets/pre-sterimed-document.jpg", "Bidon Presterimed photographié dans la fiche technique fournie", "Photo issue de la fiche fournie",
+        [("0,5 %", "Dilution indiquée"), ("15 min", "Trempage conseillé"), ("1 L / 5 L", "Conditionnements indiqués")],
+        f'''
+<section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">INDICATIONS</span><h2>Pour l’instrumentation médicale.</h2><p>La fiche décrit le nettoyage et la pré-désinfection des instruments chirurgicaux et médicaux, des dispositifs thermosensibles et du matériel d’endoscopie.</p><img class="detail-secondary-image detail-instruments-image" src="assets/presterimed-instruments.jpg" alt="Instruments médicaux illustrant les indications de Presterimed"></div><div class="detail-main"><div class="detail-block"><h3>Caractéristiques</h3><ul class="detail-list"><li>Solution limpide de couleur bleue.</li><li>Indiquée comme non corrosive vis-à-vis de l’instrumentation.</li><li>Utilisable en bac à ultrasons.</li><li>pH à la dilution d’emploi : environ 7.</li><li>Stabilité physico-chimique indiquée jusqu’à +70 °C.</li></ul></div><div class="detail-block"><h3>Composition</h3><p>Chlorure de didécyldiméthylammonium, polyhexaméthylène biguanide, parfum, colorant et excipient, selon la fiche fournie.</p></div></div></div></section>
+<section class="section pale-section detail-protocol"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">PROTOCOLE D’UTILISATION</span><h2>Préparer, immerger, rincer.</h2></div><p>La fiche fournit un protocole de trempage. Suivez les instructions du produit et les procédures de votre établissement.</p></div><ol class="protocol-grid"><li><strong>Préparer la dilution</strong><p>Verser 25 ml de produit dans 5 litres d’eau froide ou tiède pour obtenir une dilution à 0,5 %.</p></li><li><strong>Immerger complètement</strong><p>Plonger entièrement le dispositif médical. Le temps de trempage conseillé est de 15 minutes.</p></li><li><strong>Nettoyer si nécessaire</strong><p>Brosser si besoin ; pour le matériel endoscopique, écouvillonner les parties concernées.</p></li><li><strong>Rincer et essuyer</strong><p>Rincer soigneusement à l’eau de réseau de bonne qualité microbiologique, y compris l’extérieur et l’intérieur du matériel endoscopique, puis essuyer avec un champ propre.</p></li></ol><p class="protocol-note">Renouveler le bain de trempage au moins une fois par jour, selon la fiche.</p></div></section>
+<section class="section"><div class="container"><div class="section-heading"><span class="eyebrow">DONNÉES DE LA FICHE</span><h2>Propriétés microbiologiques indiquées.</h2><p>Les normes et temps de contact ci-dessous sont transcrits de la fiche transmise ; ils ne constituent pas une vérification indépendante.</p></div>{product_table(presterimed_rows)}</div></section>
+<section class="section pale-section"><div class="container detail-safety-grid"><div><span class="eyebrow">CONDITIONNEMENTS</span><h2>Formats mentionnés.</h2><p>Carton de 12 flacons de 1 litre ou bidon de 5 litres avec pompe doseuse de 25 ml.</p><div class="detail-formats"><span>12 × 1 L</span><span>5 L + pompe 25 ml</span></div></div><div><span class="eyebrow">PRÉCAUTIONS</span><h2>Produit dangereux.</h2><p>La fiche indique un stockage de +5 °C à +35 °C. Consultez l’étiquette et la fiche de sécurité avant manipulation.</p><div class="hazard-icons"><figure><img src="assets/hazard-toxic.png" alt="Pictogramme de toxicité présent dans la fiche"><figcaption>Toxicité</figcaption></figure></div></div></div></section>
+''',
+        "Informations issues de la fiche Presterimed transmise, qui porte la mention EURL Khodja Laboratoire. La photo, l’illustration d’instruments et le pictogramme proviennent de ce document. Vérifiez l’étiquette, la fiche de sécurité et la documentation à jour avant toute utilisation.",
+        [("surfacide.html", "SOLS & SURFACES", "Surfacide"), ("surfaces-hautes.html", "SURFACES HAUTES", "Surfaces hautes")]
+    )),
+    "surfaces-hautes.html": ("Surfaces hautes", "Découvrez la famille de détergents désinfectants pour surfaces hautes présentée par Azuré Pharm.", product_page(
+        "Surfaces hautes", "DÉTERGENT DÉSINFECTANT", "Une famille de produits destinée à l’entretien des surfaces hautes et des zones de contact dans les environnements de soins.",
+        "assets/product-surfaces-hautes.png", "Visuel de présentation du produit pour surfaces hautes", "Visuel d’illustration",
+        [("Surfaces hautes", "Famille de produits"), ("Hôpitaux & cliniques", "Environnements concernés"), ("Sur demande", "Informations techniques")],
+        '''
+<section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">PRÉSENTATION</span><h2>Les points de contact du quotidien.</h2><p>Cette famille est consacrée aux surfaces hautes et aux zones fréquemment touchées dans les établissements de santé.</p></div><div class="detail-main"><div class="detail-block"><h3>Pour quels besoins ?</h3><ul class="detail-list"><li>Entretien des surfaces hautes dans les espaces de soins.</li><li>Prise en compte des zones de contact du mobilier et des équipements.</li><li>Échange avec notre équipe pour identifier la référence adaptée à votre établissement.</li></ul></div><div class="detail-block"><h3>Informations à préciser</h3><p>La composition, la dilution, les temps de contact, les conditionnements et les précautions d’emploi dépendent de la référence exacte. Demandez ces informations avant utilisation.</p></div></div></div></section>
+<section class="section pale-section"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">VOTRE DEMANDE</span><h2>Décrivez l’usage recherché.</h2></div><p>Précisez le type de surfaces et d’établissement pour permettre à l’équipe Azuré Pharm de vous orienter vers les informations produits disponibles.</p></div><div class="editorial-grid"><article><span>01 / SURFACE</span><h3>Quelles zones ?</h3><p>Indiquez les surfaces hautes ou les points de contact concernés.</p></article><article><span>02 / ÉTABLISSEMENT</span><h3>Quel environnement ?</h3><p>Hôpital, clinique ou collectivité : le contexte aide à comprendre le besoin.</p></article><article><span>03 / DOCUMENTS</span><h3>Quelles données ?</h3><p>Demandez la fiche de la référence proposée, son mode d’emploi et ses précautions.</p></article></div></div></section>
+''',
+        "Cette page de présentation est rédigée à partir des informations générales transmises pour Azuré Pharm. Le visuel est une illustration. Les données techniques du produit surfaces hautes doivent être confirmées sur la fiche et l’étiquette de la référence retenue.",
+        [("surfacide.html", "SOLS & SURFACES", "Surfacide"), ("presterimed.html", "INSTRUMENTS", "Presterimed")]
+    )),
+})
+
 for filename, (title, description, body) in pages.items():
-    (ROOT / filename).write_text(shell(title, description, filename, body), encoding="utf-8")
+    body = (body
+        .replace('href="produits.html#sols-surfaces"', 'href="surfacide.html"')
+        .replace('href="produits.html#surfaces-hautes"', 'href="surfaces-hautes.html"')
+        .replace('href="produits.html#instruments"', 'href="presterimed.html"')
+        .replace('assets/product-sols-surfaces.png', 'assets/surfacide-document.jpg')
+        .replace('assets/product-instruments.png', 'assets/pre-sterimed-document.jpg')
+        .replace('Visuel illustratif du détergent désinfectant sols et surfaces', 'Photo du bidon Surfacide issue de la fiche fournie')
+        .replace('Visuel illustratif du nettoyant pré-désinfectant pour instruments', 'Photo du bidon Presterimed issue de la fiche fournie')
+        .replace('Visuel illustratif du produit pour sols et surfaces', 'Photo du bidon Surfacide issue de la fiche fournie')
+        .replace('Visuel illustratif du produit pour instruments', 'Photo du bidon Presterimed issue de la fiche fournie')
+        .replace('Images de produits à titre d’illustration.', 'Surfacide et Presterimed : photos des fiches fournies. Surfaces hautes : visuel d’illustration.')
+        .replace('<figcaption>Visuel d’illustration</figcaption></figure></article>\n<article class="product-row" id="surfaces-hautes"', '<figcaption>Photo de la fiche fournie</figcaption></figure></article>\n<article class="product-row" id="surfaces-hautes"')
+        .replace('<figcaption>Visuel d’illustration</figcaption></figure></article>\n</div></section><section class="section pale-section"', '<figcaption>Photo de la fiche fournie</figcaption></figure></article>\n</div></section><section class="section pale-section"')
+        .replace('<h3>Détergents désinfectants sols et surfaces</h3>', '<h3>Surfacide<small>Détergent désinfectant sols et surfaces</small></h3>')
+        .replace('<h3>Nettoyants pré-désinfectants des instruments</h3>', '<h3>Presterimed<small>Nettoyant pré-désinfectant des instruments</small></h3>')
+        .replace('<h2>Détergents désinfectants sols et surfaces</h2>', '<h2>Surfacide — sols et surfaces</h2>')
+        .replace('<h2>Nettoyants pré-désinfectants des instruments</h2>', '<h2>Presterimed — instruments</h2>'))
+    if filename in ("index.html", "produits.html"):
+        body = (body
+            .replace('href="contact.html?produit=Sols%20et%20surfaces">Demander des informations ↗', 'href="surfacide.html">Voir la fiche Surfacide ↗')
+            .replace('href="contact.html?produit=Surfaces%20hautes">Demander des informations ↗', 'href="surfaces-hautes.html">Voir la fiche produit ↗')
+            .replace('href="contact.html?produit=Instruments">Demander des informations ↗', 'href="presterimed.html">Voir la fiche Presterimed ↗'))
+    active = "produits.html" if filename in ("surfacide.html", "presterimed.html", "surfaces-hautes.html") else filename
+    (ROOT / filename).write_text(shell(title, description, active, body), encoding="utf-8")
