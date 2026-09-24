@@ -49,6 +49,22 @@ if (slides.length && dots.length) {
   start();
 }
 
+const roadmap = document.querySelector('#roadmap');
+const roadmapPath = roadmap?.querySelector('.roadmap-path-progress');
+if (roadmap && roadmapPath) {
+  const pathLength = roadmapPath.getTotalLength();
+  roadmapPath.style.strokeDasharray = String(pathLength);
+  const updateRoadmap = () => {
+    const bounds = roadmap.getBoundingClientRect();
+    const start = window.innerHeight * 0.55;
+    const progress = Math.max(0, Math.min(1, (start - bounds.top) / (bounds.height - window.innerHeight * 0.45)));
+    roadmapPath.style.strokeDashoffset = String(pathLength * (1 - progress));
+  };
+  window.addEventListener('scroll', updateRoadmap, { passive: true });
+  window.addEventListener('resize', updateRoadmap);
+  updateRoadmap();
+}
+
 if (form) {
   const params = new URLSearchParams(location.search);
   const product = params.get('produit');
