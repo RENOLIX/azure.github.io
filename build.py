@@ -15,10 +15,26 @@ nav = [
     ("contact.html", "Contact"),
 ]
 
+def ticker_markup():
+    topics = (
+        "HYGIÈNE DES SOLS & SURFACES",
+        "SURFACES HAUTES",
+        "INSTRUMENTS MÉDICAUX",
+        "HÔPITAUX",
+        "CLINIQUES",
+        "COLLECTIVITÉS",
+    )
+    group = "".join(
+        f'<span class="ticker-item">{escape(topic)}<svg class="icon icon-plus" aria-hidden="true"><use href="#icon-plus"/></svg></span>'
+        for topic in topics
+    )
+    return f'<div class="ticker" aria-label="Les domaines d’activité Azuré Pharm"><div class="ticker-track"><div class="ticker-group">{group}</div><div class="ticker-group" aria-hidden="true">{group}</div></div></div>'
+
 def shell(title, description, current, body):
+    body = body.replace("<!-- AZURE_TICKER -->", ticker_markup())
     links = "".join(f'<a href="{url}"{(" aria-current=\"page\"" if url == current else "")}>{label}</a>' for url, label in nav)
     mobile_links = "".join(f'<a href="{url}"{(" aria-current=\"page\"" if url == current else "")}>{label}</a>' for url, label in nav)
-    return f'''<!doctype html>
+    html = f'''<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -27,12 +43,13 @@ def shell(title, description, current, body):
   <meta name="description" content="{escape(description, quote=True)}">
   <title>{escape(title)} · Azuré Pharm</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101b40'/%3E%3Cpath d='M12 49 30 13l7 15-7 9-3-7-10 19z' fill='%235d57a5'/%3E%3Cpath d='M31 43c10-15 21-22 27-17 5 5-3 17-17 23l-4-7c10-4 15-10 13-12-3-2-10 4-18 16z' fill='%232d9ddb'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="assets/site.css?v=5">
+  <link rel="stylesheet" href="assets/site.css?v=6">
   <script src="assets/site.js?v=2" defer></script>
 </head>
 <body>
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol><symbol id="icon-phone" viewBox="0 0 24 24"><path d="M8.5 3.5 6 2.5a2 2 0 0 0-2.4.8C2.2 5.6 3.7 11 7.6 15s9.4 5.4 11.7 4a2 2 0 0 0 .8-2.4l-1-2.5a2 2 0 0 0-2.3-1.2l-2.6.5a15 15 0 0 1-4.7-4.7l.5-2.6a2 2 0 0 0-1.5-2.6Z"/></symbol><symbol id="icon-arrow-up-right" viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></symbol><symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol></svg>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <div class="topline"><div class="container topline-inner"><a href="mailto:{MAIL}">✉ &nbsp; {MAIL}</a><a href="tel:+213660456457">☎ &nbsp; {PHONE}</a></div></div>
+  <div class="topline"><div class="container topline-inner"><a href="mailto:{MAIL}">✉ {MAIL}</a><a href="tel:+213660456457">☎ {PHONE}</a></div></div>
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="Azuré Pharm, accueil"><span class="brand-mark"><img src="assets/azure-pharm-logo.png" alt=""></span><span class="brand-name">AZURÉ <strong>PHARM</strong><small>Votre partenaire de confiance</small></span></a>
@@ -54,11 +71,17 @@ def shell(title, description, current, body):
   </footer>
 </body>
 </html>'''
+    return (html
+        .replace("✉", '<svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>')
+        .replace("☎", '<svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg>')
+        .replace("↗", '<svg class="icon icon-arrow" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg>')
+        .replace("→", '<svg class="icon icon-arrow" aria-hidden="true"><use href="#icon-arrow-right"/></svg>')
+        .replace("✦", '<svg class="icon icon-plus" aria-hidden="true"><use href="#icon-plus"/></svg>'))
 
 pages = {
 "index.html": ("Accueil", "Azuré Pharm fabrique des détergents désinfectants pour les établissements de santé en Algérie.", '''
 <section class="hero hero-slider" aria-label="Présentation Azuré Pharm"><div class="hero-slide is-active"><img src="assets/production-illustration.png" alt="Illustration d’une ligne de production de produits d’hygiène"><div class="hero-shade"></div><div class="container hero-copy"><h1>Une production pensée<br>pour les espaces de soins.</h1><p>Azuré Pharm fabrique des détergents désinfectants pour les professionnels de santé en Algérie.</p><a class="button button-inset button-hero" href="entreprise.html">Découvrir l’entreprise <span aria-hidden="true">↗</span></a></div></div><div class="hero-slide"><img src="assets/azure-products-scene.png" alt="Présentation illustrative de la gamme Azuré Pharm"><div class="hero-shade"></div><div class="container hero-copy"><h1>Des solutions d’hygiène<br>pour chaque usage.</h1><p>Sols, surfaces hautes et instruments : découvrez nos trois familles de produits.</p><a class="button button-inset button-hero" href="produits.html">Voir nos produits <span aria-hidden="true">↗</span></a></div></div><div class="hero-slide"><img src="assets/azure-laboratory.png" alt="Illustration des projets de recherche Azuré Pharm"><div class="hero-shade"></div><div class="container hero-copy"><h1>Votre partenaire<br>de confiance.</h1><p>Depuis 2021, Azuré Pharm accompagne les exigences d’hygiène du secteur de la santé.</p><a class="button button-inset button-hero" href="recherche.html">Notre démarche <span aria-hidden="true">↗</span></a></div></div><div class="hero-dots" aria-label="Choisir une diapositive"><button class="is-active" type="button" aria-label="Voir la diapositive 1" aria-current="true"></button><button type="button" aria-label="Voir la diapositive 2"></button><button type="button" aria-label="Voir la diapositive 3"></button></div></section>
-<div class="ticker" aria-label="Les domaines d’activité Azuré Pharm"><div>HYGIÈNE DES SOLS & SURFACES <span>✦</span> SURFACES HAUTES <span>✦</span> INSTRUMENTS MÉDICAUX <span>✦</span> HÔPITAUX <span>✦</span> CLINIQUES <span>✦</span> COLLECTIVITÉS</div></div>
+<!-- AZURE_TICKER -->
 <section class="section intro-section"><div class="container"><div class="gallery-title"><span>NOTRE SAVOIR-FAIRE</span><h2>Au service de la<br><em>confiance.</em></h2><p>Des produits d’hygiène pensés pour les espaces de soins, fabriqués en Algérie depuis 2021.</p></div><div class="expertise-panel"><div class="expertise-lead"><span class="eyebrow">AZURÉ PHARM</span><h3>Une expertise centrée sur les usages de santé.</h3><p>Notre activité relie fabrication locale, exigences d’hygiène et dialogue avec les professionnels pour répondre aux besoins du quotidien.</p><a class="button button-inset" href="entreprise.html">Découvrir notre entreprise ↗</a></div><div class="expertise-list"><div><span>01</span><strong>Production locale</strong><p>Une unité de production située à Ouled Moussa, en Algérie.</p></div><div><span>02</span><strong>Trois familles de produits</strong><p>Des solutions pour sols et surfaces, surfaces hautes et instruments.</p></div><div><span>03</span><strong>Culture de l’hygiène</strong><p>Une activité dédiée aux espaces de soins et à leurs exigences.</p></div></div></div></div></section>
 <section class="section roadmap-section"><div class="container"><div class="section-heading roadmap-heading"><span class="eyebrow">PROCESSUS</span><h2>La trajectoire Azuré</h2><p>Un parcours clair du besoin d’hygiène à la mise à disposition des produits, avec une attention portée à chaque étape.</p></div><div class="roadmap" id="roadmap"><div class="roadmap-track" aria-hidden="true"><div class="roadmap-ball"></div><svg viewBox="0 0 52 2047" preserveAspectRatio="none"><path class="roadmap-path-bg" d="M26 0V314C12 314 1 326 1 339C1 352 11 364 26 364C41 364 51 353 51 339C51 325 28 318 26 339V636V654.5C13.5 654.5 1 664 1 679C1 694 12 703 26 703C40 703 50.5 692.5 50.5 679C49.2307 664.367 26 660 26 679V979V994.5C13.5 994.5 1 1003.5 1 1019C1 1034.5 12 1044 26 1043.5C37 1043 50.5 1035 50.5 1019C50.5 1003 28.5 1001 26 1019V1327V1338C13 1338 1 1348.5 1 1363C1 1377.5 13.5 1388 26 1388C38.5 1388 51 1381 51 1363C51 1345 26 1346 26 1363V1678.5C12.5 1678.5 1 1687.5 1 1703C1 1718.5 14 1727.5 26 1727.5C38 1727.5 50.5 1719 50.5 1703C50.5 1687 26 1687 26 1703V2047"/><path class="roadmap-path-progress" d="M26 0V314C12 314 1 326 1 339C1 352 11 364 26 364C41 364 51 353 51 339C51 325 28 318 26 339V636V654.5C13.5 654.5 1 664 1 679C1 694 12 703 26 703C40 703 50.5 692.5 50.5 679C49.2307 664.367 26 660 26 679V979V994.5C13.5 994.5 1 1003.5 1 1019C1 1034.5 12 1044 26 1043.5C37 1043 50.5 1035 50.5 1019C50.5 1003 28.5 1001 26 1019V1327V1338C13 1338 1 1348.5 1 1363C1 1377.5 13.5 1388 26 1388C38.5 1388 51 1381 51 1363C51 1345 26 1346 26 1363V1678.5C12.5 1678.5 1 1687.5 1 1703C1 1718.5 14 1727.5 26 1727.5C38 1727.5 50.5 1719 50.5 1703C50.5 1687 26 1687 26 1703V2047"/></svg></div><div class="roadmap-steps"><article class="roadmap-step"><div class="roadmap-card"><span>01</span><h3>Comprendre le besoin</h3><p>Identifier l’environnement, les surfaces concernées et les attentes des équipes de soins.</p></div></article><article class="roadmap-step"><div class="roadmap-card"><span>02</span><h3>Orienter vers une gamme</h3><p>Choisir parmi les solutions pour sols et surfaces, surfaces hautes ou instruments.</p></div></article><article class="roadmap-step"><div class="roadmap-card"><span>03</span><h3>Préparer la production</h3><p>Organiser la fabrication à partir des besoins et des informations produits nécessaires.</p></div></article><article class="roadmap-step"><div class="roadmap-card"><span>04</span><h3>Fabriquer à Ouled Moussa</h3><p>Inscrire la production dans l’activité de notre unité implantée en Algérie.</p></div></article><article class="roadmap-step"><div class="roadmap-card"><span>05</span><h3>Veiller à la qualité</h3><p>Garder les exigences d’hygiène du secteur de la santé au cœur de notre démarche.</p></div></article><article class="roadmap-step"><div class="roadmap-card"><span>06</span><h3>Accompagner la demande</h3><p>Rester disponibles pour les informations produits et les échanges avec les professionnels.</p></div></article></div></div></div></section>
 <section class="section pale-section"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">NOS PRODUITS</span><h2>Une réponse à chaque besoin d’hygiène.</h2></div><p>Trois familles de produits dédiées aux hôpitaux, cliniques et collectivités.</p></div><div class="product-grid"><a class="product-card" href="produits.html#sols-surfaces"><img src="assets/product-sols-surfaces.png" alt="Visuel illustratif du détergent désinfectant sols et surfaces"><span class="card-index">01 / SOLS & SURFACES</span><h3>Détergents désinfectants sols et surfaces</h3><span class="card-link">Découvrir ↗</span></a><a class="product-card" href="produits.html#surfaces-hautes"><img src="assets/product-surfaces-hautes.png" alt="Visuel illustratif du détergent désinfectant surfaces hautes"><span class="card-index">02 / SURFACES HAUTES</span><h3>Détergents désinfectants surfaces hautes</h3><span class="card-link">Découvrir ↗</span></a><a class="product-card" href="produits.html#instruments"><img src="assets/product-instruments.png" alt="Visuel illustratif du nettoyant pré-désinfectant pour instruments"><span class="card-index">03 / INSTRUMENTS</span><h3>Nettoyants pré-désinfectants des instruments</h3><span class="card-link">Découvrir ↗</span></a></div><p class="image-disclaimer">Images de produits à titre d’illustration.</p></div></section>
