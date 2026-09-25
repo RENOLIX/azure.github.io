@@ -44,13 +44,13 @@ def shell(title, description, current, body):
   <meta name="description" content="{escape(description, quote=True)}">
   <title>{escape(title)} · Azuré Pharm</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101b40'/%3E%3Cpath d='M12 49 30 13l7 15-7 9-3-7-10 19z' fill='%235d57a5'/%3E%3Cpath d='M31 43c10-15 21-22 27-17 5 5-3 17-17 23l-4-7c10-4 15-10 13-12-3-2-10 4-18 16z' fill='%232d9ddb'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="assets/site.css?v=9">
+  <link rel="stylesheet" href="assets/site.css?v=10">
   <script src="assets/site.js?v=2" defer></script>
 </head>
 <body>
-  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol><symbol id="icon-phone" viewBox="0 0 24 24"><path d="M8.5 3.5 6 2.5a2 2 0 0 0-2.4.8C2.2 5.6 3.7 11 7.6 15s9.4 5.4 11.7 4a2 2 0 0 0 .8-2.4l-1-2.5a2 2 0 0 0-2.3-1.2l-2.6.5a15 15 0 0 1-4.7-4.7l.5-2.6a2 2 0 0 0-1.5-2.6Z"/></symbol><symbol id="icon-arrow-up-right" viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></symbol><symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol></svg>
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><symbol id="icon-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 7 9 6 9-6"/></symbol><symbol id="icon-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.91.66 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.23a2 2 0 0 1 2.11-.45c.9.32 1.85.54 2.81.66A2 2 0 0 1 22 16.92Z"/></symbol><symbol id="icon-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.027 1.792-4.697 4.533-4.697 1.313 0 2.686.235 2.686.235v2.977H15.83c-1.49 0-1.955.93-1.955 1.886v2.259h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></symbol><symbol id="icon-instagram" viewBox="0 0 24 24"><path d="M7.17 0h9.66C20.79 0 24 3.21 24 7.17v9.66c0 3.96-3.21 7.17-7.17 7.17H7.17C3.21 24 0 20.79 0 16.83V7.17C0 3.21 3.21 0 7.17 0Zm0 2.16a5.01 5.01 0 0 0-5.01 5.01v9.66a5.01 5.01 0 0 0 5.01 5.01h9.66a5.01 5.01 0 0 0 5.01-5.01V7.17a5.01 5.01 0 0 0-5.01-5.01H7.17ZM12 5.82a6.18 6.18 0 1 1 0 12.36 6.18 6.18 0 0 1 0-12.36Zm0 2.16a4.02 4.02 0 1 0 0 8.04 4.02 4.02 0 0 0 0-8.04Zm6.43-2.41a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/></symbol><symbol id="icon-arrow-up-right" viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></symbol><symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol></svg>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <div class="topline"><div class="container topline-inner"><a href="mailto:{MAIL}">✉ {MAIL}</a><a href="tel:+213660456457">☎ {PHONE}</a></div></div>
+  <div class="topline"><div class="container topline-inner"><a href="mailto:{MAIL}">@@ICON_MAIL@@ {MAIL}</a><a href="tel:+213660456457">@@ICON_PHONE@@ {PHONE}</a></div></div>
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="Azuré Pharm, accueil"><span class="brand-mark"><img src="assets/azure-pharm-logo.png" alt=""></span><span class="brand-name">AZURÉ <strong>PHARM</strong><small>Votre partenaire de confiance</small></span></a>
@@ -61,20 +61,23 @@ def shell(title, description, current, body):
     <nav class="mobile-nav" id="mobile-nav" aria-label="Navigation mobile" hidden>{mobile_links}</nav>
   </header>
   <main id="contenu">{body}</main>
-  <footer class="site-footer">
+  <footer class="site-footer" id="site-footer">
     <div class="container footer-main">
       <div class="footer-brand"><div class="footer-brand-name">AZURÉ PHARM<span>.</span></div><p>Votre partenaire de confiance.</p><p>Détergents désinfectants conçus pour les exigences du secteur de la santé.</p></div>
       <div><h2>Explorer</h2><a href="index.html">Accueil</a><a href="produits.html">Nos produits</a><a href="entreprise.html">L’entreprise</a><a href="recherche.html">Recherche & développement</a></div>
-      <div><h2>Nous contacter</h2><a href="tel:+213660456457">0660 456 457</a><a href="tel:+213553779211">0553 779 211</a><a href="mailto:{MAIL}">{MAIL}</a><span>Dely Brahim, Alger, Algérie</span></div>
-      <div><h2>Suivez-nous</h2><a href="{FACEBOOK}" target="_blank" rel="noopener noreferrer">Facebook ↗</a><a href="{INSTAGRAM}" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div>
+      <div class="footer-contact"><h2>Nous contacter</h2><a href="tel:+213660456457">@@ICON_PHONE@@<span>0660 456 457</span></a><a href="tel:+213553779211">@@ICON_PHONE@@<span>0553 779 211</span></a><a href="mailto:{MAIL}">@@ICON_MAIL@@<span>{MAIL}</span></a><div class="footer-location">@@ICON_PIN@@<span>Dely Brahim, Alger, Algérie</span></div></div>
+      <div class="footer-social"><h2>Suivez-nous</h2><a href="{FACEBOOK}" target="_blank" rel="noopener noreferrer">@@ICON_FACEBOOK@@<span>Facebook</span></a><a href="{INSTAGRAM}" target="_blank" rel="noopener noreferrer">@@ICON_INSTAGRAM@@<span>Instagram</span></a></div>
     </div>
     <div class="container footer-bottom"><span>© 2026 Azuré Pharm. Tous droits réservés.</span><span>Ouled Moussa · Dely Brahim · Algérie</span></div>
   </footer>
 </body>
 </html>'''
     return (html
-        .replace("✉", '<svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>')
-        .replace("☎", '<svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg>')
+        .replace("@@ICON_MAIL@@", '<svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>')
+        .replace("@@ICON_PHONE@@", '<svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg>')
+        .replace("@@ICON_PIN@@", '<svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg>')
+        .replace("@@ICON_FACEBOOK@@", '<svg class="icon icon-brand icon-facebook" aria-hidden="true"><use href="#icon-facebook"/></svg>')
+        .replace("@@ICON_INSTAGRAM@@", '<svg class="icon icon-brand icon-instagram" aria-hidden="true"><use href="#icon-instagram"/></svg>')
         .replace("↗", '<svg class="icon icon-arrow" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg>')
         .replace("→", '<svg class="icon icon-arrow" aria-hidden="true"><use href="#icon-arrow-right"/></svg>')
         .replace("✦", '<svg class="icon icon-plus" aria-hidden="true"><use href="#icon-plus"/></svg>'))
@@ -225,5 +228,22 @@ for filename, (title, description, body) in pages.items():
             .replace('href="contact.html?produit=Sols%20et%20surfaces">Demander des informations ↗', 'href="surfacide.html">Voir la fiche Surfacide ↗')
             .replace('href="contact.html?produit=Surfaces%20hautes">Demander des informations ↗', 'href="surfaces-hautes.html">Voir la fiche produit ↗')
             .replace('href="contact.html?produit=Instruments">Demander des informations ↗', 'href="presterimed.html">Voir la fiche Presterimed ↗'))
+    if filename == "index.html":
+        body = body.replace('<p>Unité de production à Ouled Moussa. Siège social à Dely Brahim, Alger.</p>', '<p class="location-copy">@@ICON_PIN@@ Unité de production à Ouled Moussa. Siège social à Dely Brahim, Alger.</p>')
+    if filename == "entreprise.html":
+        body = (body
+            .replace('<p>Ouled Moussa, Algérie</p>', '<p class="location-copy">@@ICON_PIN@@ Ouled Moussa, Algérie</p>')
+            .replace('<p>Dely Brahim, Alger, Algérie</p>', '<p class="location-copy">@@ICON_PIN@@ Dely Brahim, Alger, Algérie</p>'))
+    if filename == "contact.html":
+        body = (body
+            .replace('<span>E-mail</span>', '<span class="detail-label">@@ICON_MAIL@@ E-mail</span>')
+            .replace('<span>Téléphone</span>', '<span class="detail-label">@@ICON_PHONE@@ Téléphone</span>')
+            .replace('<span>Siège social</span>', '<span class="detail-label">@@ICON_PIN@@ Siège social</span>')
+            .replace('>Facebook ↗</a>', '>@@ICON_FACEBOOK@@ Facebook</a>')
+            .replace('>Instagram ↗</a>', '>@@ICON_INSTAGRAM@@ Instagram</a>')
+            .replace('<h3>Dely Brahim</h3>', '<h3>@@ICON_PIN@@ Dely Brahim</h3>')
+            .replace('<h3>Ouled Moussa</h3>', '<h3>@@ICON_PIN@@ Ouled Moussa</h3>')
+            .replace('>Contacter le siège ↗</a>', '>@@ICON_MAIL@@ Contacter le siège ↗</a>')
+            .replace('>Écrire un e-mail ↗</a>', '>@@ICON_MAIL@@ Écrire un e-mail ↗</a>'))
     active = "produits.html" if filename in ("surfacide.html", "presterimed.html", "surfaces-hautes.html") else filename
     (ROOT / filename).write_text(shell(title, description, active, body), encoding="utf-8")
