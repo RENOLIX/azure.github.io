@@ -167,7 +167,7 @@ presterimed_rows = [
 pages.update({
     "surfacide.html": ("Surfacide", "Surfacide, détergent désinfectant pour sols et surfaces : indications, dilution, mode d’emploi et caractéristiques d’après la fiche fournie.", product_page(
         "Surfacide", "SOLS & SURFACES", "Détergent désinfectant destiné au nettoyage et à la désinfection des sols, murs, matériels et dispositifs médicaux, selon la fiche technique transmise.",
-        "assets/azure-sols-surfaces.jpg", "Bidon Azuré Pharm, détergent désinfectant sols et surfaces",
+        "assets/azure-sols-surfaces-v2.webp", "Bidon Azuré Pharm, détergent désinfectant sols et surfaces",
         [("0,25 %", "Dilution indiquée"), ("20 ml", "Pour 8 L d’eau"), ("1 L / 5 L", "Conditionnements indiqués")],
         f'''
 <section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">INDICATIONS</span><h2>Pour les sols, murs et surfaces.</h2><p>La fiche mentionne le nettoyage et la désinfection des sols, des murs, du matériel et des dispositifs médicaux.</p></div><div class="detail-main"><div class="detail-block"><h3>Caractéristiques</h3><ul class="detail-list"><li>Utilisable en eau froide ou chaude, jusqu’à +60 °C.</li><li>Large compatibilité annoncée avec les matériaux et revêtements de surface.</li><li>pH du produit pur : environ 12 ; pH à la dilution d’emploi : environ 8,5.</li><li>Formule indiquée comme non corrosive en raison de l’absence d’oxydant.</li></ul></div><div class="detail-block"><h3>Composition qualitative</h3><p>N-(3-aminopropyl)-N-dodécylpropane-1,3-diamine (51 mg/g), chlorure de didécyldiméthylammonium (25 mg/g) et excipient, selon la fiche fournie.</p></div></div></div></section>
@@ -180,7 +180,7 @@ pages.update({
     )),
     "presterimed.html": ("Presterimed", "Presterimed, détergent pré-désinfectant de l’instrumentation : protocole, conditionnements et données de la fiche fournie.", product_page(
         "Presterimed", "INSTRUMENTS", "Détergent pré-désinfectant de l’instrumentation chirurgicale et médicale, du matériel thermosensible et d’endoscopie, selon la fiche technique transmise.",
-        "assets/azure-instruments.jpg", "Bidon Azuré Pharm, nettoyant pré-désinfectant des instruments médicaux",
+        "assets/azure-instruments-v2.webp", "Bidon Azuré Pharm, nettoyant pré-désinfectant des instruments médicaux",
         [("0,5 %", "Dilution indiquée"), ("15 min", "Trempage conseillé"), ("1 L / 5 L", "Conditionnements indiqués")],
         f'''
 <section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">INDICATIONS</span><h2>Pour l’instrumentation médicale.</h2><p>La fiche décrit le nettoyage et la pré-désinfection des instruments chirurgicaux et médicaux, des dispositifs thermosensibles et du matériel d’endoscopie.</p></div><div class="detail-main"><div class="detail-block"><h3>Caractéristiques</h3><ul class="detail-list"><li>Solution limpide de couleur bleue.</li><li>Indiquée comme non corrosive vis-à-vis de l’instrumentation.</li><li>Utilisable en bac à ultrasons.</li><li>pH à la dilution d’emploi : environ 7.</li><li>Stabilité physico-chimique indiquée jusqu’à +70 °C.</li></ul></div><div class="detail-block"><h3>Composition</h3><p>Chlorure de didécyldiméthylammonium, polyhexaméthylène biguanide, parfum, colorant et excipient, selon la fiche fournie.</p></div></div></div></section>
@@ -193,7 +193,7 @@ pages.update({
     )),
     "surfaces-hautes.html": ("Surfaces hautes", "Découvrez la famille de détergents désinfectants pour surfaces hautes présentée par Azuré Pharm.", product_page(
         "Surfaces hautes", "DÉTERGENT DÉSINFECTANT", "Une famille de produits destinée à l’entretien des surfaces hautes et des zones de contact dans les environnements de soins.",
-        "assets/azure-surfaces-hautes.jpg", "Pulvérisateur Azuré Pharm, détergent désinfectant surfaces hautes",
+        "assets/azure-surfaces-hautes-v2.webp", "Pulvérisateur Azuré Pharm, détergent désinfectant surfaces hautes",
         [("Surfaces hautes", "Famille de produits"), ("Hôpitaux & cliniques", "Environnements concernés"), ("Sur demande", "Informations techniques")],
         '''
 <section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">PRÉSENTATION</span><h2>Les points de contact du quotidien.</h2><p>Cette famille est consacrée aux surfaces hautes et aux zones fréquemment touchées dans les établissements de santé.</p></div><div class="detail-main"><div class="detail-block"><h3>Pour quels besoins ?</h3><ul class="detail-list"><li>Entretien des surfaces hautes dans les espaces de soins.</li><li>Prise en compte des zones de contact du mobilier et des équipements.</li><li>Échange avec notre équipe pour identifier la référence adaptée à votre établissement.</li></ul></div><div class="detail-block"><h3>Informations à préciser</h3><p>La composition, la dilution, les temps de contact, les conditionnements et les précautions d’emploi dépendent de la référence exacte. Demandez ces informations avant utilisation.</p></div></div></div></section>
@@ -209,9 +209,9 @@ for filename, (title, description, body) in pages.items():
         .replace('href="produits.html#sols-surfaces"', 'href="surfacide.html"')
         .replace('href="produits.html#surfaces-hautes"', 'href="surfaces-hautes.html"')
         .replace('href="produits.html#instruments"', 'href="presterimed.html"')
-        .replace('assets/product-sols-surfaces.png', 'assets/azure-sols-surfaces.jpg')
-        .replace('assets/product-surfaces-hautes.png', 'assets/azure-surfaces-hautes.jpg')
-        .replace('assets/product-instruments.png', 'assets/azure-instruments.jpg')
+        .replace('assets/product-sols-surfaces.png', 'assets/azure-sols-surfaces-v2.webp')
+        .replace('assets/product-surfaces-hautes.png', 'assets/azure-surfaces-hautes-v2.webp')
+        .replace('assets/product-instruments.png', 'assets/azure-instruments-v2.webp')
         .replace('Visuel illustratif du détergent désinfectant sols et surfaces', 'Bidon Azuré Pharm pour sols et surfaces')
         .replace('Visuel illustratif du détergent désinfectant surfaces hautes', 'Pulvérisateur Azuré Pharm pour surfaces hautes')
         .replace('Visuel illustratif du nettoyant pré-désinfectant pour instruments', 'Bidon Azuré Pharm pour instruments médicaux')
