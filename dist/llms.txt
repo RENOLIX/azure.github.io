@@ -6,9 +6,9 @@ Azuré Pharm est une entreprise algérienne de production de détergents désinf
 
 - [Accueil](https://azure-pharm.com/)
 - [Nos produits](https://azure-pharm.com/produits.html)
-- [Sols et surfaces](https://azure-pharm.com/surfacide.html)
+- [Sols et surfaces](https://azure-pharm.com/sols-surfaces.html)
 - [Surfaces hautes](https://azure-pharm.com/surfaces-hautes.html)
-- [Pré-désinfection des instruments](https://azure-pharm.com/presterimed.html)
+- [Pré-désinfection des instruments](https://azure-pharm.com/instruments-medicaux.html)
 - [Notre entreprise](https://azure-pharm.com/entreprise.html)
 - [Recherche et développement](https://azure-pharm.com/recherche.html)
 - [Contact](https://azure-pharm.com/contact.html)

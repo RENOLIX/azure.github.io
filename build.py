@@ -5,7 +5,7 @@ import json
 from urllib.parse import quote
 
 ROOT = Path(__file__).parent / "dist"
-MAIL = "eurlazurepharm@gmail.com"
+MAIL = "contact@azure-pharm.com"
 PHONE = "0660 456 457"
 FACEBOOK = "https://www.facebook.com/share/1R3SXmtx3s/"
 INSTAGRAM = "https://www.instagram.com/azurepharm2021?utm_source=qr&stkn=MXd4ZWpmeDU4dXU1Yw=="
@@ -15,9 +15,9 @@ SOCIAL_IMAGE = f"{SITE_URL}/assets/azure-products-scene.png"
 SEO_TITLES = {
     "index.html": "Azuré Pharm | Hygiène professionnelle pour le secteur de la santé",
     "produits.html": "Produits d’hygiène pour les établissements de santé | Azuré Pharm",
-    "surfacide.html": "Surfacide : sols et surfaces | Azuré Pharm",
-    "surfaces-hautes.html": "Désinfectant surfaces hautes | Azuré Pharm",
-    "presterimed.html": "Presterimed : pré-désinfection des instruments | Azuré Pharm",
+    "sols-surfaces.html": "Détergent désinfectant sols et surfaces | Azuré Pharm",
+    "surfaces-hautes.html": "Détergent désinfectant surfaces hautes | Azuré Pharm",
+    "instruments-medicaux.html": "Nettoyant pré-désinfectant des instruments | Azuré Pharm",
     "entreprise.html": "Notre entreprise à Ouled Moussa et Alger | Azuré Pharm",
     "recherche.html": "Recherche et développement | Azuré Pharm",
     "contact.html": "Contact à Dely Brahim, Alger | Azuré Pharm",
@@ -25,9 +25,9 @@ SEO_TITLES = {
 PAGE_IMAGES = {
     "index.html": SOCIAL_IMAGE,
     "produits.html": SOCIAL_IMAGE,
-    "surfacide.html": f"{SITE_URL}/assets/azure-sols-surfaces-v2.webp",
-    "surfaces-hautes.html": f"{SITE_URL}/assets/azure-surfaces-hautes-v2.webp",
-    "presterimed.html": f"{SITE_URL}/assets/azure-instruments-v2.webp",
+    "sols-surfaces.html": f"{SITE_URL}/assets/azure-sols-surfaces-v3.jpg",
+    "surfaces-hautes.html": f"{SITE_URL}/assets/azure-surfaces-hautes-v3.jpg",
+    "instruments-medicaux.html": f"{SITE_URL}/assets/azure-instruments-v3.jpg",
     "entreprise.html": f"{SITE_URL}/assets/production-illustration.png",
     "recherche.html": f"{SITE_URL}/assets/azure-laboratory.png",
     "contact.html": f"{SITE_URL}/assets/azure-pharm-logo.png",
@@ -102,7 +102,7 @@ def structured_data(filename, title, description):
     ]
     if filename != "index.html":
         crumbs = [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": f"{SITE_URL}/"}]
-        if filename in ("surfacide.html", "surfaces-hautes.html", "presterimed.html"):
+        if filename in ("sols-surfaces.html", "surfaces-hautes.html", "instruments-medicaux.html"):
             crumbs.append({"@type": "ListItem", "position": 2, "name": "Nos produits", "item": f"{SITE_URL}/produits.html"})
         crumbs.append({"@type": "ListItem", "position": len(crumbs) + 1, "name": title, "item": url})
         graph.append({"@type": "BreadcrumbList", "@id": f"{url}#breadcrumb", "itemListElement": crumbs})
@@ -113,9 +113,9 @@ def structured_data(filename, title, description):
             "@id": f"{url}#produits",
             "name": "Familles de produits Azuré Pharm",
             "itemListElement": [
-                {"@type": "ListItem", "position": 1, "name": "Détergents désinfectants sols et surfaces", "url": f"{SITE_URL}/surfacide.html"},
-                {"@type": "ListItem", "position": 2, "name": "Détergents désinfectants surfaces hautes", "url": f"{SITE_URL}/surfaces-hautes.html"},
-                {"@type": "ListItem", "position": 3, "name": "Nettoyants pré-désinfectants des instruments", "url": f"{SITE_URL}/presterimed.html"},
+                {"@type": "ListItem", "position": 1, "name": "Détergent désinfectant sols et surfaces", "url": f"{SITE_URL}/sols-surfaces.html"},
+                {"@type": "ListItem", "position": 2, "name": "Détergent désinfectant surfaces hautes", "url": f"{SITE_URL}/surfaces-hautes.html"},
+                {"@type": "ListItem", "position": 3, "name": "Nettoyant pré-désinfectant des instruments", "url": f"{SITE_URL}/instruments-medicaux.html"},
             ],
         })
         graph[2]["mainEntity"] = {"@id": f"{url}#produits"}
@@ -159,8 +159,8 @@ def shell(title, description, current, body, filename):
   <meta name="twitter:image" content="{SOCIAL_IMAGE}">
   <meta name="twitter:image:alt" content="Gamme de produits d’hygiène Azuré Pharm">
   <script type="application/ld+json">{metadata}</script>
-  <link rel="stylesheet" href="assets/site.css?v=11">
-  <script src="assets/site.js?v=2" defer></script>
+  <link rel="stylesheet" href="assets/site.css?v=12">
+  <script src="assets/site.js?v=3" defer></script>
 </head>
 <body>
   <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><symbol id="icon-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 7 9 6 9-6"/></symbol><symbol id="icon-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.91.66 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.23a2 2 0 0 1 2.11-.45c.9.32 1.85.54 2.81.66A2 2 0 0 1 22 16.92Z"/></symbol><symbol id="icon-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.027 1.792-4.697 4.533-4.697 1.313 0 2.686.235 2.686.235v2.977H15.83c-1.49 0-1.955.93-1.955 1.886v2.259h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></symbol><symbol id="icon-instagram" viewBox="0 0 24 24"><path d="M7.17 0h9.66C20.79 0 24 3.21 24 7.17v9.66c0 3.96-3.21 7.17-7.17 7.17H7.17C3.21 24 0 20.79 0 16.83V7.17C0 3.21 3.21 0 7.17 0Zm0 2.16a5.01 5.01 0 0 0-5.01 5.01v9.66a5.01 5.01 0 0 0 5.01 5.01h9.66a5.01 5.01 0 0 0 5.01-5.01V7.17a5.01 5.01 0 0 0-5.01-5.01H7.17ZM12 5.82a6.18 6.18 0 1 1 0 12.36 6.18 6.18 0 0 1 0-12.36Zm0 2.16a4.02 4.02 0 1 0 0 8.04 4.02 4.02 0 0 0 0-8.04Zm6.43-2.41a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/></symbol><symbol id="icon-arrow-up-right" viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></symbol><symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol></svg>
@@ -234,9 +234,9 @@ pages = {
 '''),
 "contact.html": ("Contact", "Contactez Azuré Pharm à Dely Brahim, Alger, pour toute question sur ses détergents désinfectants.", '''
 <section class="page-hero"><div class="container"><span class="eyebrow">CONTACT</span><h1>Parlons de vos besoins.</h1><p>Une question sur nos produits ou notre activité ? Notre équipe est à votre écoute.</p></div></section>
-<section class="section contact-section"><div class="container contact-grid"><div class="contact-details"><span class="eyebrow">NOS COORDONNÉES</span><h2>Restons en contact.</h2><div class="detail-item"><span>E-mail</span><a href="mailto:eurlazurepharm@gmail.com">eurlazurepharm@gmail.com</a></div><div class="detail-item"><span>Téléphone</span><a href="tel:+213660456457">0660 456 457</a><a href="tel:+213553779211">0553 779 211</a></div><div class="detail-item"><span>Siège social</span><strong>Dely Brahim, Alger, Algérie</strong></div><div class="social-row"><a href="https://www.facebook.com/share/1R3SXmtx3s/" target="_blank" rel="noopener noreferrer">Facebook ↗</a><a href="https://www.instagram.com/azurepharm2021?utm_source=qr&amp;stkn=MXd4ZWpmeDU4dXU1Yw==" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div></div><div class="form-card"><h2>Écrivez-nous</h2><p>Complétez le formulaire pour préparer votre message dans votre messagerie.</p><form id="contact-form"><div class="form-two"><label>Nom et prénom <span>*</span><input name="nom" autocomplete="name" required></label><label>Adresse e-mail <span>*</span><input name="email" type="email" autocomplete="email" required></label></div><label>Téléphone<input name="telephone" type="tel" autocomplete="tel"></label><label>Sujet <span>*</span><input name="sujet" required></label><label>Votre message <span>*</span><textarea name="message" rows="6" required></textarea></label><button class="button button-inset" type="submit">Préparer l’e-mail <span aria-hidden="true">↗</span></button><p class="form-note" id="form-note" role="status">Votre application de messagerie s’ouvrira pour l’envoi.</p></form></div></div></section>
-<section class="section pale-section"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">POUR ALLER PLUS VITE</span><h2>Une demande claire, une réponse plus utile.</h2></div><p>Indiquez le type d’établissement, la famille de produits concernée et les informations recherchées. Nous pourrons ainsi mieux comprendre votre demande.</p></div><div class="editorial-grid"><article><span>01 / PRODUIT</span><h3>Précisez la gamme</h3><p>Sols et surfaces, surfaces hautes ou instruments : mentionnez l’usage qui vous intéresse.</p><a href="produits.html">Voir les produits ↗</a></article><article><span>02 / CONTEXTE</span><h3>Présentez votre structure</h3><p>Hôpital, clinique ou collectivité : quelques mots suffisent pour situer votre besoin.</p><a href="entreprise.html">Découvrir l’entreprise ↗</a></article><article><span>03 / DOCUMENTS</span><h3>Demandez les détails</h3><p>Pour une référence ou une certification, sollicitez les informations officielles disponibles à jour.</p><a href="mailto:eurlazurepharm@gmail.com">Écrire un e-mail ↗</a></article></div></div></section>
-<section class="section contact-locations"><div class="container"><div class="section-heading"><span class="eyebrow">NOS ADRESSES</span><h2>Présents en Algérie.</h2></div><div class="address-grid"><div><span>01 / SIÈGE SOCIAL</span><h3>Dely Brahim</h3><p>Alger, Algérie</p><a href="mailto:eurlazurepharm@gmail.com">Contacter le siège ↗</a></div><div><span>02 / PRODUCTION</span><h3>Ouled Moussa</h3><p>Algérie</p><a href="entreprise.html#implantations">Découvrir notre implantation ↗</a></div></div></div></section>
+<section class="section contact-section"><div class="container contact-grid"><div class="contact-details"><span class="eyebrow">NOS COORDONNÉES</span><h2>Restons en contact.</h2><div class="detail-item"><span>E-mail</span><a href="mailto:contact@azure-pharm.com">contact@azure-pharm.com</a></div><div class="detail-item"><span>Téléphone</span><a href="tel:+213660456457">0660 456 457</a><a href="tel:+213553779211">0553 779 211</a></div><div class="detail-item"><span>Siège social</span><strong>Dely Brahim, Alger, Algérie</strong></div><div class="social-row"><a href="https://www.facebook.com/share/1R3SXmtx3s/" target="_blank" rel="noopener noreferrer">Facebook ↗</a><a href="https://www.instagram.com/azurepharm2021?utm_source=qr&amp;stkn=MXd4ZWpmeDU4dXU1Yw==" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div></div><div class="form-card"><h2>Écrivez-nous</h2><p>Complétez le formulaire pour préparer votre message dans votre messagerie.</p><form id="contact-form"><div class="form-two"><label>Nom et prénom <span>*</span><input name="nom" autocomplete="name" required></label><label>Adresse e-mail <span>*</span><input name="email" type="email" autocomplete="email" required></label></div><label>Téléphone<input name="telephone" type="tel" autocomplete="tel"></label><label>Sujet <span>*</span><input name="sujet" required></label><label>Votre message <span>*</span><textarea name="message" rows="6" required></textarea></label><button class="button button-inset" type="submit">Préparer l’e-mail <span aria-hidden="true">↗</span></button><p class="form-note" id="form-note" role="status">Votre application de messagerie s’ouvrira pour l’envoi.</p></form></div></div></section>
+<section class="section pale-section"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">POUR ALLER PLUS VITE</span><h2>Une demande claire, une réponse plus utile.</h2></div><p>Indiquez le type d’établissement, la famille de produits concernée et les informations recherchées. Nous pourrons ainsi mieux comprendre votre demande.</p></div><div class="editorial-grid"><article><span>01 / PRODUIT</span><h3>Précisez la gamme</h3><p>Sols et surfaces, surfaces hautes ou instruments : mentionnez l’usage qui vous intéresse.</p><a href="produits.html">Voir les produits ↗</a></article><article><span>02 / CONTEXTE</span><h3>Présentez votre structure</h3><p>Hôpital, clinique ou collectivité : quelques mots suffisent pour situer votre besoin.</p><a href="entreprise.html">Découvrir l’entreprise ↗</a></article><article><span>03 / DOCUMENTS</span><h3>Demandez les détails</h3><p>Pour une référence ou une certification, sollicitez les informations officielles disponibles à jour.</p><a href="mailto:contact@azure-pharm.com">Écrire un e-mail ↗</a></article></div></div></section>
+<section class="section contact-locations"><div class="container"><div class="section-heading"><span class="eyebrow">NOS ADRESSES</span><h2>Présents en Algérie.</h2></div><div class="address-grid"><div><span>01 / SIÈGE SOCIAL</span><h3>Dely Brahim</h3><p>Alger, Algérie</p><a href="mailto:contact@azure-pharm.com">Contacter le siège ↗</a></div><div><span>02 / PRODUCTION</span><h3>Ouled Moussa</h3><p>Algérie</p><a href="entreprise.html#implantations">Découvrir notre implantation ↗</a></div></div></div></section>
 '''),
 }
 
@@ -258,7 +258,7 @@ def product_page(name, family, summary, image, image_alt, facts, sections, sourc
 <section class="contact-strip"><div class="container contact-strip-inner"><div><span class="eyebrow">BESOIN D’UN DOCUMENT ?</span><h2>Parlons de votre usage.</h2></div><a class="button button-inset button-strip" href="{contact_url}">Contacter Azuré Pharm ↗</a></div></section>
 '''
 
-surfacide_rows = [
+sols_surfaces_rows = [
     ("Bactéries", "EN 1040, EN 13727, EN 1276, T72-300 (BMR), EN 13697", "5 min"),
     ("Bactéries", "NF T 72-170 / T 72-300 (L. pneumophila)", "15 min"),
     ("Mycobactéries", "Mycobacterium tuberculosis (B.K)", "15 min"),
@@ -270,7 +270,7 @@ surfacide_rows = [
     ("Virus", "PRV (virus modèle HBV)", "30 min"),
 ]
 
-presterimed_rows = [
+instruments_rows = [
     ("Bactéries", "EN 1040, EN 13727, NF T 72-171 / SARM (EN 13727)", "5 min"),
     ("Bactéries", "NF T 72-190, T72-300 (A. baumannii)", "15 min"),
     ("Mycobactéries", "Mycobacterium tuberculosis (B.K)", "15 min"),
@@ -280,53 +280,53 @@ presterimed_rows = [
 ]
 
 pages.update({
-    "surfacide.html": ("Surfacide", "Surfacide, détergent désinfectant pour sols et surfaces : indications, dilution, mode d’emploi et caractéristiques d’après la fiche fournie.", product_page(
-        "Surfacide", "SOLS & SURFACES", "Détergent désinfectant destiné au nettoyage et à la désinfection des sols, murs, matériels et dispositifs médicaux, selon la fiche technique transmise.",
-        "assets/azure-sols-surfaces-v2.webp", "Bidon Azuré Pharm, détergent désinfectant sols et surfaces",
+    "sols-surfaces.html": ("Détergent désinfectant sols et surfaces", "Détergent désinfectant pour sols et surfaces Azuré Pharm : indications, dilution, mode d’emploi et caractéristiques de la fiche technique.", product_page(
+        "Détergent désinfectant sols et surfaces", "SOLS & SURFACES", "Détergent désinfectant destiné au nettoyage et à la désinfection des sols, murs, matériels et dispositifs médicaux, selon la fiche technique transmise.",
+        "assets/azure-sols-surfaces-v3.jpg", "Bidon Azuré Pharm, détergent désinfectant sols et surfaces",
         [("0,25 %", "Dilution indiquée"), ("20 ml", "Pour 8 L d’eau"), ("1 L / 5 L", "Conditionnements indiqués")],
         f'''
 <section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">INDICATIONS</span><h2>Pour les sols, murs et surfaces.</h2><p>La fiche mentionne le nettoyage et la désinfection des sols, des murs, du matériel et des dispositifs médicaux.</p></div><div class="detail-main"><div class="detail-block"><h3>Caractéristiques</h3><ul class="detail-list"><li>Utilisable en eau froide ou chaude, jusqu’à +60 °C.</li><li>Large compatibilité annoncée avec les matériaux et revêtements de surface.</li><li>pH du produit pur : environ 12 ; pH à la dilution d’emploi : environ 8,5.</li><li>Formule indiquée comme non corrosive en raison de l’absence d’oxydant.</li></ul></div><div class="detail-block"><h3>Composition qualitative</h3><p>N-(3-aminopropyl)-N-dodécylpropane-1,3-diamine (51 mg/g), chlorure de didécyldiméthylammonium (25 mg/g) et excipient, selon la fiche fournie.</p></div></div></div></section>
-<section class="section pale-section detail-protocol"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">MODE D’EMPLOI</span><h2>La méthode indiquée dans la fiche.</h2></div><p>Ces étapes reprennent le document transmis. Respectez toujours l’étiquette et les consignes en vigueur dans votre établissement.</p></div><ol class="protocol-grid"><li><strong>Préparer deux seaux</strong><p>Remplir un seau de lavage et un seau de rinçage avec 8 litres d’eau chacun.</p></li><li><strong>Diluer à 0,25 %</strong><p>Verser une dose de 20 ml de Surfacide dans le seau de lavage.</p></li><li><strong>Nettoyer la zone</strong><p>Après balayage humide, laver du fond de la pièce vers la sortie. La fiche précise de ne pas rincer les surfaces.</p></li><li><strong>Gérer la chiffonnette</strong><p>Rincer et essorer la chiffonnette avant de la replonger dans le seau de lavage. La fiche recommande de placer le chariot dans le couloir.</p></li></ol></div></section>
-<section class="section"><div class="container"><div class="section-heading"><span class="eyebrow">DONNÉES DE LA FICHE</span><h2>Propriétés microbiologiques indiquées.</h2><p>Les normes et temps de contact ci-dessous sont transcrits de la fiche transmise ; ils ne constituent pas une vérification indépendante.</p></div>{product_table(surfacide_rows)}</div></section>
+<section class="section pale-section detail-protocol"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">MODE D’EMPLOI</span><h2>La méthode indiquée dans la fiche.</h2></div><p>Ces étapes reprennent le document transmis. Respectez toujours l’étiquette et les consignes en vigueur dans votre établissement.</p></div><ol class="protocol-grid"><li><strong>Préparer deux seaux</strong><p>Remplir un seau de lavage et un seau de rinçage avec 8 litres d’eau chacun.</p></li><li><strong>Diluer à 0,25 %</strong><p>Verser une dose de 20 ml de produit dans le seau de lavage.</p></li><li><strong>Nettoyer la zone</strong><p>Après balayage humide, laver du fond de la pièce vers la sortie. La fiche précise de ne pas rincer les surfaces.</p></li><li><strong>Gérer la chiffonnette</strong><p>Rincer et essorer la chiffonnette avant de la replonger dans le seau de lavage. La fiche recommande de placer le chariot dans le couloir.</p></li></ol></div></section>
+<section class="section"><div class="container"><div class="section-heading"><span class="eyebrow">DONNÉES DE LA FICHE</span><h2>Propriétés microbiologiques indiquées.</h2><p>Les normes et temps de contact ci-dessous sont transcrits de la fiche transmise ; ils ne constituent pas une vérification indépendante.</p></div>{product_table(sols_surfaces_rows)}</div></section>
 <section class="section pale-section"><div class="container detail-safety-grid"><div><span class="eyebrow">CONDITIONNEMENTS</span><h2>Formats mentionnés.</h2><p>Carton de 12 flacons de 1 litre ou bidon de 5 litres.</p><div class="detail-formats"><span>12 × 1 L</span><span>5 L</span></div></div><div><span class="eyebrow">PRÉCAUTIONS</span><h2>Produit dangereux.</h2><p>Respecter les précautions d’emploi indiquées sur l’étiquette. Stockage de +5 °C à +35 °C selon la fiche.</p><div class="hazard-icons"><figure><img src="assets/hazard-toxic.png" alt="Pictogramme de toxicité présent dans la fiche"><figcaption>Toxicité</figcaption></figure><figure><img src="assets/hazard-corrosive.png" alt="Pictogramme de corrosion présent dans la fiche"><figcaption>Corrosion</figcaption></figure><figure><img src="assets/hazard-environment.jpg" alt="Pictogramme de danger environnemental présent dans la fiche"><figcaption>Environnement</figcaption></figure></div></div></div></section>
 ''',
-        "Informations techniques issues de la fiche Surfacide transmise à Azuré Pharm. Le visuel présente la dénomination de la famille de produits. Vérifiez auprès d’Azuré Pharm la correspondance de ces données avec la référence proposée, puis consultez son étiquette et sa fiche de sécurité à jour avant toute utilisation.",
-        [("surfaces-hautes.html", "SURFACES HAUTES", "Surfaces hautes"), ("presterimed.html", "INSTRUMENTS", "Presterimed")]
+        "Données techniques communiquées pour cette référence Azuré Pharm. Consultez l’étiquette, la fiche technique et la fiche de sécurité à jour avant toute utilisation.",
+        [("surfaces-hautes.html", "SURFACES HAUTES", "Surfaces hautes"), ("instruments-medicaux.html", "INSTRUMENTS", "Instruments médicaux")]
     )),
-    "presterimed.html": ("Presterimed", "Presterimed, détergent pré-désinfectant de l’instrumentation : protocole, conditionnements et données de la fiche fournie.", product_page(
-        "Presterimed", "INSTRUMENTS", "Détergent pré-désinfectant de l’instrumentation chirurgicale et médicale, du matériel thermosensible et d’endoscopie, selon la fiche technique transmise.",
-        "assets/azure-instruments-v2.webp", "Bidon Azuré Pharm, nettoyant pré-désinfectant des instruments médicaux",
+    "instruments-medicaux.html": ("Nettoyant pré-désinfectant des instruments médicaux", "Nettoyant pré-désinfectant des instruments médicaux Azuré Pharm : protocole, conditionnements et données de la fiche technique.", product_page(
+        "Nettoyant pré-désinfectant des instruments médicaux", "INSTRUMENTS", "Nettoyant pré-désinfectant destiné à l’instrumentation chirurgicale et médicale, au matériel thermosensible et d’endoscopie, selon la fiche technique transmise.",
+        "assets/azure-instruments-v3.jpg", "Bidon Azuré Pharm, nettoyant pré-désinfectant des instruments médicaux",
         [("0,5 %", "Dilution indiquée"), ("15 min", "Trempage conseillé"), ("1 L / 5 L", "Conditionnements indiqués")],
         f'''
 <section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">INDICATIONS</span><h2>Pour l’instrumentation médicale.</h2><p>La fiche décrit le nettoyage et la pré-désinfection des instruments chirurgicaux et médicaux, des dispositifs thermosensibles et du matériel d’endoscopie.</p></div><div class="detail-main"><div class="detail-block"><h3>Caractéristiques</h3><ul class="detail-list"><li>Solution limpide de couleur bleue.</li><li>Indiquée comme non corrosive vis-à-vis de l’instrumentation.</li><li>Utilisable en bac à ultrasons.</li><li>pH à la dilution d’emploi : environ 7.</li><li>Stabilité physico-chimique indiquée jusqu’à +70 °C.</li></ul></div><div class="detail-block"><h3>Composition</h3><p>Chlorure de didécyldiméthylammonium, polyhexaméthylène biguanide, parfum, colorant et excipient, selon la fiche fournie.</p></div></div></div></section>
 <section class="section pale-section detail-protocol"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">PROTOCOLE D’UTILISATION</span><h2>Préparer, immerger, rincer.</h2></div><p>La fiche fournit un protocole de trempage. Suivez les instructions du produit et les procédures de votre établissement.</p></div><ol class="protocol-grid"><li><strong>Préparer la dilution</strong><p>Verser 25 ml de produit dans 5 litres d’eau froide ou tiède pour obtenir une dilution à 0,5 %.</p></li><li><strong>Immerger complètement</strong><p>Plonger entièrement le dispositif médical. Le temps de trempage conseillé est de 15 minutes.</p></li><li><strong>Nettoyer si nécessaire</strong><p>Brosser si besoin ; pour le matériel endoscopique, écouvillonner les parties concernées.</p></li><li><strong>Rincer et essuyer</strong><p>Rincer soigneusement à l’eau de réseau de bonne qualité microbiologique, y compris l’extérieur et l’intérieur du matériel endoscopique, puis essuyer avec un champ propre.</p></li></ol><p class="protocol-note">Renouveler le bain de trempage au moins une fois par jour, selon la fiche.</p></div></section>
-<section class="section"><div class="container"><div class="section-heading"><span class="eyebrow">DONNÉES DE LA FICHE</span><h2>Propriétés microbiologiques indiquées.</h2><p>Les normes et temps de contact ci-dessous sont transcrits de la fiche transmise ; ils ne constituent pas une vérification indépendante.</p></div>{product_table(presterimed_rows)}</div></section>
+<section class="section"><div class="container"><div class="section-heading"><span class="eyebrow">DONNÉES DE LA FICHE</span><h2>Propriétés microbiologiques indiquées.</h2><p>Les normes et temps de contact ci-dessous sont transcrits de la fiche transmise ; ils ne constituent pas une vérification indépendante.</p></div>{product_table(instruments_rows)}</div></section>
 <section class="section pale-section"><div class="container detail-safety-grid"><div><span class="eyebrow">CONDITIONNEMENTS</span><h2>Formats mentionnés.</h2><p>Carton de 12 flacons de 1 litre ou bidon de 5 litres avec pompe doseuse de 25 ml.</p><div class="detail-formats"><span>12 × 1 L</span><span>5 L + pompe 25 ml</span></div></div><div><span class="eyebrow">PRÉCAUTIONS</span><h2>Produit dangereux.</h2><p>La fiche indique un stockage de +5 °C à +35 °C. Consultez l’étiquette et la fiche de sécurité avant manipulation.</p><div class="hazard-icons"><figure><img src="assets/hazard-toxic.png" alt="Pictogramme de toxicité présent dans la fiche"><figcaption>Toxicité</figcaption></figure></div></div></div></section>
 ''',
-        "Informations techniques issues de la fiche Presterimed transmise à Azuré Pharm. Le visuel présente la dénomination de la famille de produits. Vérifiez auprès d’Azuré Pharm la correspondance de ces données avec la référence proposée, puis consultez son étiquette et sa fiche de sécurité à jour avant toute utilisation.",
-        [("surfacide.html", "SOLS & SURFACES", "Surfacide"), ("surfaces-hautes.html", "SURFACES HAUTES", "Surfaces hautes")]
+        "Données techniques communiquées pour cette référence Azuré Pharm. Consultez l’étiquette, la fiche technique et la fiche de sécurité à jour avant toute utilisation.",
+        [("sols-surfaces.html", "SOLS & SURFACES", "Sols et surfaces"), ("surfaces-hautes.html", "SURFACES HAUTES", "Surfaces hautes")]
     )),
-    "surfaces-hautes.html": ("Surfaces hautes", "Découvrez la famille de détergents désinfectants pour surfaces hautes présentée par Azuré Pharm.", product_page(
-        "Surfaces hautes", "DÉTERGENT DÉSINFECTANT", "Une famille de produits destinée à l’entretien des surfaces hautes et des zones de contact dans les environnements de soins.",
-        "assets/azure-surfaces-hautes-v2.webp", "Pulvérisateur Azuré Pharm, détergent désinfectant surfaces hautes",
+    "surfaces-hautes.html": ("Détergent désinfectant surfaces hautes", "Découvrez le détergent désinfectant pour surfaces hautes présenté par Azuré Pharm.", product_page(
+        "Détergent désinfectant surfaces hautes", "SURFACES HAUTES", "Une famille de produits destinée à l’entretien des surfaces hautes et des zones de contact dans les environnements de soins.",
+        "assets/azure-surfaces-hautes-v3.jpg", "Pulvérisateur Azuré Pharm, détergent désinfectant surfaces hautes",
         [("Surfaces hautes", "Famille de produits"), ("Hôpitaux & cliniques", "Environnements concernés"), ("Sur demande", "Informations techniques")],
         '''
 <section class="section detail-content"><div class="container detail-columns"><div class="detail-side"><span class="eyebrow">PRÉSENTATION</span><h2>Les points de contact du quotidien.</h2><p>Cette famille est consacrée aux surfaces hautes et aux zones fréquemment touchées dans les établissements de santé.</p></div><div class="detail-main"><div class="detail-block"><h3>Pour quels besoins ?</h3><ul class="detail-list"><li>Entretien des surfaces hautes dans les espaces de soins.</li><li>Prise en compte des zones de contact du mobilier et des équipements.</li><li>Échange avec notre équipe pour identifier la référence adaptée à votre établissement.</li></ul></div><div class="detail-block"><h3>Informations à préciser</h3><p>La composition, la dilution, les temps de contact, les conditionnements et les précautions d’emploi dépendent de la référence exacte. Demandez ces informations avant utilisation.</p></div></div></div></section>
 <section class="section pale-section"><div class="container"><div class="section-heading split-heading"><div><span class="eyebrow">VOTRE DEMANDE</span><h2>Décrivez l’usage recherché.</h2></div><p>Précisez le type de surfaces et d’établissement pour permettre à l’équipe Azuré Pharm de vous orienter vers les informations produits disponibles.</p></div><div class="editorial-grid"><article><span>01 / SURFACE</span><h3>Quelles zones ?</h3><p>Indiquez les surfaces hautes ou les points de contact concernés.</p></article><article><span>02 / ÉTABLISSEMENT</span><h3>Quel environnement ?</h3><p>Hôpital, clinique ou collectivité : le contexte aide à comprendre le besoin.</p></article><article><span>03 / DOCUMENTS</span><h3>Quelles données ?</h3><p>Demandez la fiche de la référence proposée, son mode d’emploi et ses précautions.</p></article></div></div></section>
 ''',
         "Cette page de présentation est rédigée à partir des informations générales transmises pour Azuré Pharm. Les données techniques du produit surfaces hautes doivent être confirmées sur la fiche et l’étiquette de la référence retenue.",
-        [("surfacide.html", "SOLS & SURFACES", "Surfacide"), ("presterimed.html", "INSTRUMENTS", "Presterimed")]
+        [("sols-surfaces.html", "SOLS & SURFACES", "Sols et surfaces"), ("instruments-medicaux.html", "INSTRUMENTS", "Instruments médicaux")]
     )),
 })
 
 for filename, (title, description, body) in pages.items():
     body = (body
-        .replace('href="produits.html#sols-surfaces"', 'href="surfacide.html"')
+        .replace('href="produits.html#sols-surfaces"', 'href="sols-surfaces.html"')
         .replace('href="produits.html#surfaces-hautes"', 'href="surfaces-hautes.html"')
-        .replace('href="produits.html#instruments"', 'href="presterimed.html"')
-        .replace('assets/product-sols-surfaces.png', 'assets/azure-sols-surfaces-v2.webp')
-        .replace('assets/product-surfaces-hautes.png', 'assets/azure-surfaces-hautes-v2.webp')
-        .replace('assets/product-instruments.png', 'assets/azure-instruments-v2.webp')
+        .replace('href="produits.html#instruments"', 'href="instruments-medicaux.html"')
+        .replace('assets/product-sols-surfaces.png', 'assets/azure-sols-surfaces-v3.jpg')
+        .replace('assets/product-surfaces-hautes.png', 'assets/azure-surfaces-hautes-v3.jpg')
+        .replace('assets/product-instruments.png', 'assets/azure-instruments-v3.jpg')
         .replace('Visuel illustratif du détergent désinfectant sols et surfaces', 'Bidon Azuré Pharm pour sols et surfaces')
         .replace('Visuel illustratif du détergent désinfectant surfaces hautes', 'Pulvérisateur Azuré Pharm pour surfaces hautes')
         .replace('Visuel illustratif du nettoyant pré-désinfectant pour instruments', 'Bidon Azuré Pharm pour instruments médicaux')
@@ -336,15 +336,17 @@ for filename, (title, description, body) in pages.items():
         .replace('<p class="image-disclaimer">Images de produits à titre d’illustration.</p>', '')
         .replace('<figcaption>Visuel d’illustration</figcaption>', '')
         .replace('<span>Visuel d’illustration</span>', '')
-        .replace('<h3>Détergents désinfectants sols et surfaces</h3>', '<h3>Surfacide<small>Détergent désinfectant sols et surfaces</small></h3>')
-        .replace('<h3>Nettoyants pré-désinfectants des instruments</h3>', '<h3>Presterimed<small>Nettoyant pré-désinfectant des instruments</small></h3>')
-        .replace('<h2>Détergents désinfectants sols et surfaces</h2>', '<h2>Surfacide — sols et surfaces</h2>')
-        .replace('<h2>Nettoyants pré-désinfectants des instruments</h2>', '<h2>Presterimed — instruments</h2>'))
+        .replace('<h3>Détergents désinfectants sols et surfaces</h3>', '<h3>Détergent désinfectant sols et surfaces</h3>')
+        .replace('<h3>Détergents désinfectants surfaces hautes</h3>', '<h3>Détergent désinfectant surfaces hautes</h3>')
+        .replace('<h3>Nettoyants pré-désinfectants des instruments</h3>', '<h3>Nettoyant pré-désinfectant des instruments</h3>')
+        .replace('<h2>Détergents désinfectants sols et surfaces</h2>', '<h2>Détergent désinfectant sols et surfaces</h2>')
+        .replace('<h2>Détergents désinfectants surfaces hautes</h2>', '<h2>Détergent désinfectant surfaces hautes</h2>')
+        .replace('<h2>Nettoyants pré-désinfectants des instruments</h2>', '<h2>Nettoyant pré-désinfectant des instruments</h2>'))
     if filename in ("index.html", "produits.html"):
         body = (body
-            .replace('href="contact.html?produit=Sols%20et%20surfaces">Demander des informations ↗', 'href="surfacide.html">Voir la fiche Surfacide ↗')
+            .replace('href="contact.html?produit=Sols%20et%20surfaces">Demander des informations ↗', 'href="sols-surfaces.html">Voir la fiche produit ↗')
             .replace('href="contact.html?produit=Surfaces%20hautes">Demander des informations ↗', 'href="surfaces-hautes.html">Voir la fiche produit ↗')
-            .replace('href="contact.html?produit=Instruments">Demander des informations ↗', 'href="presterimed.html">Voir la fiche Presterimed ↗'))
+            .replace('href="contact.html?produit=Instruments">Demander des informations ↗', 'href="instruments-medicaux.html">Voir la fiche produit ↗'))
     if filename == "index.html":
         body = body.replace('<p>Unité de production à Ouled Moussa. Siège social à Dely Brahim, Alger.</p>', '<p class="location-copy">@@ICON_PIN@@ Unité de production à Ouled Moussa. Siège social à Dely Brahim, Alger.</p>')
     if filename == "entreprise.html":
@@ -362,8 +364,24 @@ for filename, (title, description, body) in pages.items():
             .replace('<h3>Ouled Moussa</h3>', '<h3>@@ICON_PIN@@ Ouled Moussa</h3>')
             .replace('>Contacter le siège ↗</a>', '>@@ICON_MAIL@@ Contacter le siège ↗</a>')
             .replace('>Écrire un e-mail ↗</a>', '>@@ICON_MAIL@@ Écrire un e-mail ↗</a>'))
-    active = "produits.html" if filename in ("surfacide.html", "presterimed.html", "surfaces-hautes.html") else filename
+    active = "produits.html" if filename in ("sols-surfaces.html", "instruments-medicaux.html", "surfaces-hautes.html") else filename
     (ROOT / filename).write_text(shell(title, description, active, body, filename), encoding="utf-8")
+
+for previous, replacement in (
+    ("surfacide.html", "sols-surfaces.html"),
+    ("presterimed.html", "instruments-medicaux.html"),
+):
+    destination = canonical_url(replacement)
+    (ROOT / previous).write_text(
+        '<!doctype html><html lang="fr"><head><meta charset="utf-8">'
+        '<meta name="robots" content="noindex, follow">'
+        f'<link rel="canonical" href="{destination}">'
+        f'<meta http-equiv="refresh" content="0; url={destination}">'
+        '<title>Fiche produit · Azuré Pharm</title></head><body>'
+        f'<p>Cette fiche a changé d’adresse. <a href="{destination}">Ouvrir la nouvelle page produit</a>.</p>'
+        '</body></html>\n',
+        encoding="utf-8",
+    )
 
 today = date.today().isoformat()
 sitemap_urls = "\n".join(
@@ -388,9 +406,9 @@ sitemap_urls = "\n".join(
     "## Pages officielles\n\n"
     f"- [Accueil]({SITE_URL}/)\n"
     f"- [Nos produits]({SITE_URL}/produits.html)\n"
-    f"- [Sols et surfaces]({SITE_URL}/surfacide.html)\n"
+    f"- [Sols et surfaces]({SITE_URL}/sols-surfaces.html)\n"
     f"- [Surfaces hautes]({SITE_URL}/surfaces-hautes.html)\n"
-    f"- [Pré-désinfection des instruments]({SITE_URL}/presterimed.html)\n"
+    f"- [Pré-désinfection des instruments]({SITE_URL}/instruments-medicaux.html)\n"
     f"- [Notre entreprise]({SITE_URL}/entreprise.html)\n"
     f"- [Recherche et développement]({SITE_URL}/recherche.html)\n"
     f"- [Contact]({SITE_URL}/contact.html)\n\n"

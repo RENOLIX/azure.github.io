@@ -75,7 +75,7 @@ if (form) {
     const values = new FormData(form);
     const subject = `[Site Azuré Pharm] ${values.get('sujet')}`;
     const body = `Nom : ${values.get('nom')}\nE-mail : ${values.get('email')}\nTéléphone : ${values.get('telephone') || 'Non indiqué'}\n\nMessage :\n${values.get('message')}`;
-    location.href = `mailto:eurlazurepharm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    location.href = `mailto:contact@azure-pharm.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     document.querySelector('#form-note').textContent = 'Votre message est prêt dans votre application de messagerie. Vérifiez-le puis envoyez-le.';
   });
 }
