@@ -1,0 +1,16 @@
+# Azuré Pharm
+
+Azuré Pharm est une entreprise algérienne de production de détergents désinfectants pour le secteur de la santé, active depuis 2021. Son unité de production se trouve à Ouled Moussa et son siège à Dely Brahim, Alger.
+
+## Pages officielles
+
+- [Accueil](https://azure-pharm.com/)
+- [Nos produits](https://azure-pharm.com/produits.html)
+- [Sols et surfaces](https://azure-pharm.com/surfacide.html)
+- [Surfaces hautes](https://azure-pharm.com/surfaces-hautes.html)
+- [Pré-désinfection des instruments](https://azure-pharm.com/presterimed.html)
+- [Notre entreprise](https://azure-pharm.com/entreprise.html)
+- [Recherche et développement](https://azure-pharm.com/recherche.html)
+- [Contact](https://azure-pharm.com/contact.html)
+
+Les caractéristiques, dosages, normes et précautions d'un produit doivent être confirmés avec sa fiche technique et son étiquette à jour.

@@ -1,5 +1,7 @@
 from pathlib import Path
 from html import escape
+from datetime import date
+import json
 from urllib.parse import quote
 
 ROOT = Path(__file__).parent / "dist"
@@ -7,6 +9,29 @@ MAIL = "eurlazurepharm@gmail.com"
 PHONE = "0660 456 457"
 FACEBOOK = "https://www.facebook.com/share/1R3SXmtx3s/"
 INSTAGRAM = "https://www.instagram.com/azurepharm2021?utm_source=qr&stkn=MXd4ZWpmeDU4dXU1Yw=="
+SITE_URL = "https://azure-pharm.com"
+SITE_NAME = "Azuré Pharm"
+SOCIAL_IMAGE = f"{SITE_URL}/assets/azure-products-scene.png"
+SEO_TITLES = {
+    "index.html": "Azuré Pharm | Hygiène professionnelle pour le secteur de la santé",
+    "produits.html": "Produits d’hygiène pour les établissements de santé | Azuré Pharm",
+    "surfacide.html": "Surfacide : sols et surfaces | Azuré Pharm",
+    "surfaces-hautes.html": "Désinfectant surfaces hautes | Azuré Pharm",
+    "presterimed.html": "Presterimed : pré-désinfection des instruments | Azuré Pharm",
+    "entreprise.html": "Notre entreprise à Ouled Moussa et Alger | Azuré Pharm",
+    "recherche.html": "Recherche et développement | Azuré Pharm",
+    "contact.html": "Contact à Dely Brahim, Alger | Azuré Pharm",
+}
+PAGE_IMAGES = {
+    "index.html": SOCIAL_IMAGE,
+    "produits.html": SOCIAL_IMAGE,
+    "surfacide.html": f"{SITE_URL}/assets/azure-sols-surfaces-v2.webp",
+    "surfaces-hautes.html": f"{SITE_URL}/assets/azure-surfaces-hautes-v2.webp",
+    "presterimed.html": f"{SITE_URL}/assets/azure-instruments-v2.webp",
+    "entreprise.html": f"{SITE_URL}/assets/production-illustration.png",
+    "recherche.html": f"{SITE_URL}/assets/azure-laboratory.png",
+    "contact.html": f"{SITE_URL}/assets/azure-pharm-logo.png",
+}
 
 nav = [
     ("index.html", "Accueil"),
@@ -31,19 +56,109 @@ def ticker_markup():
     )
     return f'<div class="ticker" aria-label="Les domaines d’activité Azuré Pharm"><div class="ticker-track"><div class="ticker-group">{group}</div><div class="ticker-group" aria-hidden="true">{group}</div></div></div>'
 
-def shell(title, description, current, body):
+def canonical_url(filename):
+    return f"{SITE_URL}/" if filename == "index.html" else f"{SITE_URL}/{filename}"
+
+
+def structured_data(filename, title, description):
+    url = canonical_url(filename)
+    graph = [
+        {
+            "@type": "Organization",
+            "@id": f"{SITE_URL}/#organization",
+            "name": SITE_NAME,
+            "alternateName": "Azure Pharm",
+            "url": f"{SITE_URL}/",
+            "logo": {"@type": "ImageObject", "url": f"{SITE_URL}/assets/azure-pharm-logo.png"},
+            "image": SOCIAL_IMAGE,
+            "description": "Entreprise algérienne de fabrication de détergents désinfectants pour le secteur de la santé depuis 2021.",
+            "foundingDate": "2021",
+            "email": MAIL,
+            "telephone": "+213660456457",
+            "address": {"@type": "PostalAddress", "addressLocality": "Dely Brahim", "addressRegion": "Alger", "addressCountry": "DZ"},
+            "areaServed": {"@type": "Country", "name": "Algérie"},
+            "sameAs": [FACEBOOK, "https://www.instagram.com/azurepharm2021/"],
+            "contactPoint": {"@type": "ContactPoint", "telephone": "+213660456457", "email": MAIL, "contactType": "customer service", "availableLanguage": "French"},
+        },
+        {
+            "@type": "WebSite",
+            "@id": f"{SITE_URL}/#website",
+            "url": f"{SITE_URL}/",
+            "name": SITE_NAME,
+            "inLanguage": "fr-DZ",
+            "publisher": {"@id": f"{SITE_URL}/#organization"},
+        },
+        {
+            "@type": {"produits.html": "CollectionPage", "entreprise.html": "AboutPage", "contact.html": "ContactPage"}.get(filename, "WebPage"),
+            "@id": f"{url}#webpage",
+            "url": url,
+            "name": SEO_TITLES[filename],
+            "description": description,
+            "inLanguage": "fr-DZ",
+            "isPartOf": {"@id": f"{SITE_URL}/#website"},
+            "about": {"@id": f"{SITE_URL}/#organization"},
+            "primaryImageOfPage": {"@type": "ImageObject", "url": PAGE_IMAGES[filename]},
+        },
+    ]
+    if filename != "index.html":
+        crumbs = [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": f"{SITE_URL}/"}]
+        if filename in ("surfacide.html", "surfaces-hautes.html", "presterimed.html"):
+            crumbs.append({"@type": "ListItem", "position": 2, "name": "Nos produits", "item": f"{SITE_URL}/produits.html"})
+        crumbs.append({"@type": "ListItem", "position": len(crumbs) + 1, "name": title, "item": url})
+        graph.append({"@type": "BreadcrumbList", "@id": f"{url}#breadcrumb", "itemListElement": crumbs})
+        graph[2]["breadcrumb"] = {"@id": f"{url}#breadcrumb"}
+    if filename == "produits.html":
+        graph.append({
+            "@type": "ItemList",
+            "@id": f"{url}#produits",
+            "name": "Familles de produits Azuré Pharm",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Détergents désinfectants sols et surfaces", "url": f"{SITE_URL}/surfacide.html"},
+                {"@type": "ListItem", "position": 2, "name": "Détergents désinfectants surfaces hautes", "url": f"{SITE_URL}/surfaces-hautes.html"},
+                {"@type": "ListItem", "position": 3, "name": "Nettoyants pré-désinfectants des instruments", "url": f"{SITE_URL}/presterimed.html"},
+            ],
+        })
+        graph[2]["mainEntity"] = {"@id": f"{url}#produits"}
+    return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+
+
+def shell(title, description, current, body, filename):
     body = body.replace("<!-- AZURE_TICKER -->", ticker_markup())
     links = "".join(f'<a href="{url}"{(" aria-current=\"page\"" if url == current else "")}>{label}</a>' for url, label in nav)
     mobile_links = "".join(f'<a href="{url}"{(" aria-current=\"page\"" if url == current else "")}>{label}</a>' for url, label in nav)
+    page_title = SEO_TITLES[filename]
+    page_url = canonical_url(filename)
+    metadata = structured_data(filename, title, description)
     html = f'''<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101b40">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="geo.region" content="DZ-16">
+  <meta name="geo.placename" content="Dely Brahim, Alger, Algérie">
   <meta name="description" content="{escape(description, quote=True)}">
-  <title>{escape(title)} · Azuré Pharm</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101b40'/%3E%3Cpath d='M12 49 30 13l7 15-7 9-3-7-10 19z' fill='%235d57a5'/%3E%3Cpath d='M31 43c10-15 21-22 27-17 5 5-3 17-17 23l-4-7c10-4 15-10 13-12-3-2-10 4-18 16z' fill='%232d9ddb'/%3E%3C/svg%3E">
+  <title>{escape(page_title)}</title>
+  <link rel="canonical" href="{page_url}">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_DZ">
+  <meta property="og:site_name" content="{SITE_NAME}">
+  <meta property="og:title" content="{escape(page_title, quote=True)}">
+  <meta property="og:description" content="{escape(description, quote=True)}">
+  <meta property="og:url" content="{page_url}">
+  <meta property="og:image" content="{SOCIAL_IMAGE}">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="Gamme de produits d’hygiène Azuré Pharm">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{escape(page_title, quote=True)}">
+  <meta name="twitter:description" content="{escape(description, quote=True)}">
+  <meta name="twitter:image" content="{SOCIAL_IMAGE}">
+  <meta name="twitter:image:alt" content="Gamme de produits d’hygiène Azuré Pharm">
+  <script type="application/ld+json">{metadata}</script>
   <link rel="stylesheet" href="assets/site.css?v=11">
   <script src="assets/site.js?v=2" defer></script>
 </head>
@@ -248,4 +363,42 @@ for filename, (title, description, body) in pages.items():
             .replace('>Contacter le siège ↗</a>', '>@@ICON_MAIL@@ Contacter le siège ↗</a>')
             .replace('>Écrire un e-mail ↗</a>', '>@@ICON_MAIL@@ Écrire un e-mail ↗</a>'))
     active = "produits.html" if filename in ("surfacide.html", "presterimed.html", "surfaces-hautes.html") else filename
-    (ROOT / filename).write_text(shell(title, description, active, body), encoding="utf-8")
+    (ROOT / filename).write_text(shell(title, description, active, body, filename), encoding="utf-8")
+
+today = date.today().isoformat()
+sitemap_urls = "\n".join(
+    f"  <url><loc>{canonical_url(filename)}</loc><lastmod>{today}</lastmod></url>"
+    for filename in pages
+)
+(ROOT / "sitemap.xml").write_text(
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    f'{sitemap_urls}\n'
+    '</urlset>\n',
+    encoding="utf-8",
+)
+(ROOT / "robots.txt").write_text(
+    f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n",
+    encoding="utf-8",
+)
+(ROOT / "llms.txt").write_text(
+    "# Azuré Pharm\n\n"
+    "Azuré Pharm est une entreprise algérienne de production de détergents désinfectants pour le secteur de la santé, active depuis 2021. "
+    "Son unité de production se trouve à Ouled Moussa et son siège à Dely Brahim, Alger.\n\n"
+    "## Pages officielles\n\n"
+    f"- [Accueil]({SITE_URL}/)\n"
+    f"- [Nos produits]({SITE_URL}/produits.html)\n"
+    f"- [Sols et surfaces]({SITE_URL}/surfacide.html)\n"
+    f"- [Surfaces hautes]({SITE_URL}/surfaces-hautes.html)\n"
+    f"- [Pré-désinfection des instruments]({SITE_URL}/presterimed.html)\n"
+    f"- [Notre entreprise]({SITE_URL}/entreprise.html)\n"
+    f"- [Recherche et développement]({SITE_URL}/recherche.html)\n"
+    f"- [Contact]({SITE_URL}/contact.html)\n\n"
+    "Les caractéristiques, dosages, normes et précautions d'un produit doivent être confirmés avec sa fiche technique et son étiquette à jour.\n",
+    encoding="utf-8",
+)
+(ROOT / "CNAME").write_text("azure-pharm.com\n", encoding="ascii")
+(ROOT / "google8be11d5bcf6901b9.html").write_text(
+    "google-site-verification: google8be11d5bcf6901b9.html\n",
+    encoding="ascii",
+)
